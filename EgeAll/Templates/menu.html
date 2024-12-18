@@ -1,0 +1,24 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    <link rel = 'stylesheet' type="text/css" href='{% static "style.css" %}'>
+</head>
+<body>
+    {% block pagename %}{% endblock %}
+
+    {% block menu %}
+    <p><a href="/platform"><h3>Главная</h3></a> </p>
+    <p><a href="/platform/videos"><h3>Видеоматериалы</h3></a> </p>
+    <p><a href="/platform/personal"><h3>Мои материалы</h3></a></p>
+    {% endblock %}
+
+    {% block content %}
+    <p>
+        <button onclick="window.location.href='/sing_in'"> Выход </button>
+    </p>
+    {% endblock %}
+</body>
+</html>

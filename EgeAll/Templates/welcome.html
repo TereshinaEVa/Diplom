@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Вход или регистрация</title>
+</head>
+<body>
+<h1>Сайт подготовки к ЕГЭ</h1>
+<p>Здесь вы можете найти интересные материалы для подготовки к ЕГЭ по информатике.
+    Вы можете добавлять полезные материалы на своей странице.
+    Материалы, опубликованные на сайте имеют информативный характер и собирают полезные материалы из других источноков
+</p>
+ <h1> Войдите или зарегистрируйтесь:</h1>
+    <form method="post">
+        {% csrf_token %}
+       <p> <label for="username">Ведите логин:</label>
+        <input type="text" id="username" name="username" maxlength="30" required>
+       </p>
+
+        <p>
+        <label for="password">Введите пароль:</label>
+        <input type="password" id="password" name="password" minlength="8" required>
+        </p>
+
+        <button type="submit">Войти</button>
+        <button onclick="window.location.href='/reg'"> Регистрация </button>
+        </p>
+    </form>
+
+    {% if error %}
+        <p style="color: orange;">{{ error }}
+    {% endif %}
+
+</body>
+</html>
