@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 from django.views.generic import TemplateView
-from .forms import UserRegister
+from .forms import UserRegister, UserWelcome
 from .models import *
 from django.http import HttpResponse
 
@@ -29,37 +29,36 @@ def registration_page(request):
                 info['error'] = 'Пользователь уже существует'
             elif password != repeat_password:
                 info['error'] = 'Пароли не совпадают'
-            elif int(age) < 18:
-                info['error'] = 'Вы должны быть старше 18'
             else:
-                Persons.objects.create(name=login, grade=grade, age=age, password=hash(password))
-                info['message'] = f'Приветствуем, {UserRegister.username}!'
+                Persons.objects.create(name=login, grade=grade, age=age, password=password)
+                info['message'] = f'Приветствуем, {login}!'
+                #return render(request, 'registration_page.html', info)
+                return redirect('object_detection:platform')
     else:
         form = UserRegister()
         info['message'] = form
-    return render(request, 'registration_page.html', info)
-
+        return render(request, 'registration_page.html', info)
 
 def welcome_str(request):
     person = Persons.objects.all()
     info = {}
     if request.method == 'POST':
+        form = UserWelcome(request.POST)
         login = request.POST.get('username')
         password = request.POST.get('password')
         #repeat_password = request.POST.get('repeat_password')
 
-        if login not in str(person) or password not in str(person):
-            info['error'] = 'Не верно введены учетные данные. Или пользователь не зарегистрирован.'
-        
+        if login in str(person) and password == Persons.objects.get(login):
+                info['message'] = f'Приветствуем, {login}!'
+                return redirect('object_detection:platform')
         else:
             #template = 'personal_str.html'
-            #info['message'] = f'Приветствуем, {login}!'
-            return render(request, 'menu.html', info)
-            
-    return render(request, 'registration_page.html', info)
+            info['error'] = 'Не верно введены учетные данные. Или пользователь не зарегистрирован.'
+            return render(request, 'registration_page.html', info)
+            #return redirect()
 
 '''def games_menu(request):
-    title = 'Магазин'
+    title = 'Выбор типа задания'
     games_ = Game.objects.all()
     context = {
         'title': title,

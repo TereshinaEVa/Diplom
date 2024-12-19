@@ -3,13 +3,12 @@ from django.db import models
 # Create your models here.
 
 
-
 class Persons(models.Model):
 
     name = models.CharField(max_length=50)  # username аккаунта
-    grade = models.DecimalField(max_digits=10, decimal_places=2)
+    grade = models.CharField(max_length=20)
     age = models.IntegerField()
-    password = hash(models.CharField())
+    password = models.CharField(max_length=20, default='12345678')
 
     def __str__(self):
         return self.name
@@ -38,8 +37,6 @@ class Video_to_stady(models.Model):
 class Tasks(models.Model):
     title = models.CharField(max_length=50)
     description = models.IntegerField()
-    correct_ans = models.IntegerField()
-    ball = models.IntegerField()
     buyer = models.ManyToManyField(Persons, related_name='tasks')
 
     def __str__(self):

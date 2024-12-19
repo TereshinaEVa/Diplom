@@ -14,12 +14,12 @@
 
         <p>
         <label for="password">Придумайте пароль:</label>
-        <input type="password" id="password" name="password" minlength="8" required>
+        <input type="text" id="password" name="password" minlength="8" required>
         </p>
 
         <p>
         <label for="repeat_password">Повторите пароль</label>
-        <input type="password" id="repeat_password" name="repeat_password" minlength="8" required>
+        <input type="text" id="repeat_password" name="repeat_password" minlength="8" required>
         </p>
 
         <p>
@@ -29,7 +29,7 @@
 
         <p>
         <label for="grade">Введите класс</label>
-        <input type="text" id="grade" name="grade" maxlength="2" required
+        <input type="text" id="grade" name="grade" maxlength="2" required>
         </p>
 
         <p>
@@ -42,8 +42,7 @@
     {% endif %}
 
     {% if massage %}
-    <p>{{ message }}</p>
-    <p><button onclick="window.location.href='/platform'"> На главную </button></p>
+        <p>{{ message }}</p>
     {% endif %}
 
 </body>

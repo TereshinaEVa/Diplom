@@ -7,7 +7,9 @@
     <link rel = 'stylesheet' type="text/css" href='{% static "style.css" %}'>
 </head>
 <body>
-    {% block pagename %}{% endblock %}
+    {% block pagename %}
+         <p>{{ message }}</p>
+    {% endblock %}
 
     {% block menu %}
     <p><a href="/platform"><h3>Главная</h3></a> </p>

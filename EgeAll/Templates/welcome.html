@@ -27,8 +27,13 @@
         </p>
     </form>
 
-    {% if error %}
+   {% if error %}
         <p style="color: orange;">{{ error }}
+    {% endif %}
+
+    {% if massage %}
+    <p>{{ message }}</p>
+    <p><button onclick="window.location.href='/platform'"> На главную </button></p>
     {% endif %}
 
 </body>
