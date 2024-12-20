@@ -5,14 +5,17 @@
 {% endblock %}
 
 {% block menu %}
+    {% if massage %}
+        <p>{{ message }}</p>
+    {% endif %}
     {{ block.super }}
 {% endblock %}
 
 {% block content %}
     <ul>
-        {% for game in games_ %}
-            <p> {{ game.title }} | {{ game.description }} | {{ game.cost }}<button> КУПИТЬ </button></p>
-            {% endfor %}
+        {% for task in tasks_ %}
+            <p> {{ task.title }}:  {{ task.description }} <a href="{{ task.original_text_url }}"> Скачать </a></p>
+        {% endfor %}
     </ul>
 
     <p><button onclick="window.location.href='/platform'"> На главную </button></p>

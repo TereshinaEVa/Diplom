@@ -11,11 +11,21 @@ def menu_str(request):
     context = {
         'title': title,
     }
-    return render(request, 'welcome.html', context)
+    return render(request, 'menu.html', context)
+
+
+def task_list(request):
+    title = 'Выбор типа задания'
+    tasks_ = Text_and_video.objects.all()
+    context = {
+        'title': title,
+        'tasks_': tasks_,
+    }
+    return render(request, 'catalog.html', context)
+
 
 def registration_page(request):
     info = {}
-    person = Persons.objects.all()
     if request.method == 'POST':
         form = UserRegister(request.POST)
         if form.is_valid():
@@ -25,52 +35,39 @@ def registration_page(request):
             age = form.cleaned_data['age']
             grade = form.cleaned_data['grade']
 
-            if login in str(person):
+            if Persons.objects.filter(name=login).exists():
                 info['error'] = 'Пользователь уже существует'
             elif password != repeat_password:
                 info['error'] = 'Пароли не совпадают'
             else:
+                #hashed_password = make_password(password)
                 Persons.objects.create(name=login, grade=grade, age=age, password=password)
                 info['message'] = f'Приветствуем, {login}!'
-                #return render(request, 'registration_page.html', info)
-                return redirect('object_detection:platform')
+                return render(request, 'catalog.html', context=info)
     else:
         form = UserRegister()
-        info['message'] = form
-        return render(request, 'registration_page.html', info)
+
+    info['form'] = form
+    return render(request, 'registration_page.html', info)
+
 
 def welcome_str(request):
-    person = Persons.objects.all()
     info = {}
     if request.method == 'POST':
-        form = UserWelcome(request.POST)
         login = request.POST.get('username')
         password = request.POST.get('password')
-        #repeat_password = request.POST.get('repeat_password')
 
-        if login in str(person) and password == Persons.objects.get(login):
-                info['message'] = f'Приветствуем, {login}!'
-                return redirect('object_detection:platform')
-        else:
-            #template = 'personal_str.html'
-            info['error'] = 'Не верно введены учетные данные. Или пользователь не зарегистрирован.'
+        try:
+            user = Persons.objects.get(name=login)
+        except Persons.DoesNotExist:
+            info['error'] = 'Пользователь не зарегистрирован.'
             return render(request, 'registration_page.html', info)
-            #return redirect()
 
-'''def games_menu(request):
-    title = 'Выбор типа задания'
-    games_ = Game.objects.all()
-    context = {
-        'title': title,
-        'games_': games_,
-        #'games': ['Atomic Heart', 'Cyberpunk 2077', 'PayDay 2']
-    }
-    return render(request, 'fourth_task/games.html', context)
+        if password != user.password:
+            info['error'] = 'Неверный пароль.'
+            return render(request, 'welcome.html', info)
 
-def cart_str(request):
-    title = 'Корзина'
-    context = {
-        'title': title
-    }
-    return render(request, 'fourth_task/cart.html', context)
-    '''
+        info['message'] = f'Приветствуем, {login}!'
+        return render(request, 'catalog.html', info)
+
+    return render(request, 'welcome.html', info)

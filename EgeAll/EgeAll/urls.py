@@ -24,7 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('reg/', registration_page),
     path('sing_in/', welcome_str),
-    #path('person/', person_page),
-    path('platform/', menu_str),
+    path('catalog/', task_list),
+    path('menu/', menu_str),
 
 ]

@@ -12,14 +12,14 @@
     {% endblock %}
 
     {% block menu %}
-    <p><a href="/platform"><h3>Главная</h3></a> </p>
-    <p><a href="/platform/videos"><h3>Видеоматериалы</h3></a> </p>
-    <p><a href="/platform/personal"><h3>Мои материалы</h3></a></p>
+    <p><a href="/menu"><h3>Главная</h3></a> </p>
+    <p><a href="/menu/videos"><h3>Видеоматериалы</h3></a> </p>
+
     {% endblock %}
 
     {% block content %}
     <p>
-        <button onclick="window.location.href='/sing_in'"> Выход </button>
+        <a href='/sing_in/'> <button>Выход</button> </a>
     </p>
     {% endblock %}
 </body>
