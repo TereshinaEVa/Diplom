@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Регистрация пользователя</title>
+</head>
+<body>
+    <h1> Регистрация пользователя</h1>
+    <form method="post">
+        {% csrf_token %}
+       <p> <label for="username">Придумайте логин:</label>
+        <input type="text" id="username" name="username" maxlength="30" required>
+       </p>
+
+        <p>
+        <label for="password">Придумайте пароль:</label>
+        <input type="text" id="password" name="password" minlength="8" required>
+        </p>
+
+        <p>
+        <label for="repeat_password">Повторите пароль</label>
+        <input type="text" id="repeat_password" name="repeat_password" minlength="8" required>
+        </p>
+
+        <p>
+        <label for="age">Введите свой возраст</label>
+        <input type="text" id="age" name="age" maxlength="3" required>
+        </p>
+
+        <p>
+        <label for="grade">Введите класс</label>
+        <input type="text" id="grade" name="grade" maxlength="2" required>
+        </p>
+
+        <p>
+        <button type="submit">Регистрация</button>
+        </p>
+        <button onclick="window.location.href='/sing_in'"> Вернуться на страницу входа </button>
+    </form>
+
+    {% if error %}
+        <p style="color: orange;">{{ error }}</p>
+    {% endif %}
+
+    {% if massage %}
+        <p>{{ message }}</p>
+    {% endif %}
+
+</body>
+</html>

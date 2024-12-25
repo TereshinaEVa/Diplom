@@ -1,0 +1,26 @@
+{% extends "menu.html" %}
+
+{% block pagename %}
+    <h1>{{ title }}</h1>
+{% endblock %}
+
+{% block menu %}
+    {% if massage %}
+        <p>{{ message }}</p>
+    {% endif %}
+    {{ block.super }}
+{% endblock %}
+
+{% block content %}
+    <ul>
+        {% for task in tasks_ %}
+            <p> {{ task.title }}:  {{ task.description }} <a href="{{ task.original_text_url }}"> Скачать </a></p>
+        {% endfor %}
+    </ul>
+
+    <p><a href='/menu/'> <button>На главную</button> </a></p>
+{% endblock %}
+
+{% block footer %}
+    {{ block.super }}
+{% endblock %}

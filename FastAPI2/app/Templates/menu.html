@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    <link rel = 'stylesheet' type="text/css" href='{% static "style.css" %}'>
+</head>
+<body>
+    {% block pagename %}
+         <p>{{ message }}</p>
+    {% endblock %}
+
+    {% block menu %}
+    <p><a href="/menu"><h3>Главная</h3></a> </p>
+    <p><a href="/catalog"><h3>Материалы для подготовки</h3></a> </p>
+    <p></p>
+    {% endblock %}
+
+    {% block content %}
+    <p>
+        <a href='/sing_in/'> <button>Выход</button> </a>
+    </p>
+    {% endblock %}
+
+    {% block footer %}
+    <p>
+        Использованые материалы:
+    </p>
+    <p>
+        <a href='https://kpolyakov.spb.ru/school/ege.htm'> Сайт К.Ю. Полякова </a><br>
+        <a href='https://kompege.ru/course'> Открытый курс КЕГЭ </a>
+    </p>
+    {% endblock %}
+</body>
+</html>
