@@ -1,4 +1,5 @@
 from flask import Flask, render_template, url_for, request, flash, session, redirect
+from users_db import *
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'gjhbjb4ug8744w8374gfbsi'
@@ -17,12 +18,22 @@ def catalog():
 
 @app.route('/reg', methods=['POST', 'GET'])
 def registration():
+    db = get_db()
+    dbase = FDataBase(db)
     if request.method == 'POST':
-        if len(request.form['username']) > 2:
-            flash('Ok')
+        if request.form['username'] in dbase:
+            flash('Пользователь уже существует')
+        elif request.form['password'] != request.form['repeat_password']:
+            flash('Пароли не совпадают')
             #print(request.form['username'])
         else:
-            flash('Not found')
+            res = dbase.addPost(request.form['username'],
+                                request.form['password'],
+                                request.form['age'],
+                                request.form['grade']
+                                )
+            return redirect(url_for('welcome'))
+    return redirect(url_for('registration'))
 
 @app.route('/welcome', methods=['POST', 'GET'])
 def login():
