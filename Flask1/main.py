@@ -22,9 +22,9 @@ def registration():
     db = get_db()
     dbase = FDataBase(db)
     if request.method == 'POST':
-        if request.form['username'] in dbase:
-            flash('Пользователь уже существует')
-        elif request.form['password'] != request.form['repeat_password']:
+        # if request.form['username'] in dbase:
+        #     flash('Пользователь уже существует')
+        if request.form['password'] != request.form['repeat_password']:
             flash('Пароли не совпадают')
             #print(request.form['username'])
         else:
@@ -33,7 +33,7 @@ def registration():
                                 request.form['age'],
                                 request.form['grade']
                                 )
-            return redirect(url_for('welcome'))
+            return redirect('/catalog')
     return render_template('registration_page.html', title='Регистрация')
 
 @app.route('/welcome', methods=['POST', 'GET'])
