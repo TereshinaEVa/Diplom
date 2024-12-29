@@ -38,16 +38,8 @@
         <p>
         <button type="submit">Регистрация</button>
         </p>
-        <button onclick="/welcome"> Вернуться на страницу входа </button>
+
     </form>
-
-    {% if error %}
-        <p style="color: orange;">{{ error }}</p>
-    {% endif %}
-
-    {% if massage %}
-        <p>{{ message }}</p>
-    {% endif %}
-
+       <a href="/welcome"> <button> Вернуться на страницу входа </button>
 </body>
 </html>

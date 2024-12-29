@@ -1,5 +1,6 @@
 from flask import Flask, render_template, url_for, request, flash, session, redirect
 from users_db import *
+from FDataBase import *
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'gjhbjb4ug8744w8374gfbsi'
@@ -33,7 +34,7 @@ def registration():
                                 request.form['grade']
                                 )
             return redirect(url_for('welcome'))
-    return redirect(url_for('registration'))
+    return render_template('registration_page.html', title='Регистрация')
 
 @app.route('/welcome', methods=['POST', 'GET'])
 def login():
