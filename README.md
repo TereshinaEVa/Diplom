@@ -40,6 +40,46 @@ class Persons(models.Model):
     def __str__(self):
         return self.name
 ```
+Теперь открываем файл view.py. Здесь располагаются функции представления, которые обеспечивают функционирование логики приложения. В файле уже есть одна строка from django.shortcuts import render. Добавим обработку https запросов и функции представления для страниц проекта. В итоге содержимое может выглядеть так:
+```
+def task_list(request):
+    title = 'Выбор типа задания'
+    tasks_ = Text_and_video.objects.all()
+    context = {
+        'title': title,
+        'tasks_': tasks_,
+    }
+    return render(request, 'catalog.html', context)
+```
+Теперь создадим файл urls.py, чтобы приложение могло сопоставить маршруты и страницы.
+```
+from django.contrib import admin
+from django.urls import path
+from django.views.generic import TemplateView
+from helper_ege1.views import *
+
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('reg/', registration_page),
+    path('sing_in/', welcome_str),
+    path('catalog/', task_list),
+    path('menu/', menu_str),
+]
+```
+Главное - не забыть импортировать используемые нужные части проекта друг в друга.
+
+Далее, возможно подключить и оформить панень администратора в файле admin.py
+Например:
+```
+@admin.register(Text_and_video)
+class TasksAdmin(admin.ModelAdmin):
+    list_display = ('title', 'description', 'original_text_url', 'original_video_url')
+    list_filter = ('title', )
+    list_per_page = 20
+```
+Здесь мы задаем то, как будет вести себя панель администрирования, каким образом ы сможем вносить данные и как обращаться к ним.
+
 ### Особенности создания приложения в FastAPI
 
 
