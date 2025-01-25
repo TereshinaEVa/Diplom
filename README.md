@@ -81,7 +81,66 @@ class TasksAdmin(admin.ModelAdmin):
 Здесь мы задаем то, как будет вести себя панель администрирования, каким образом ы сможем вносить данные и как обращаться к ним.
 
 ### Особенности создания приложения в FastAPI
+##Первый шаг — установка FastAPI.
+```
+pip install fastapi[all]
+```
+[all] - обязательно, чтобы установились все необходимые библиотеки.
 
-![image](https://github.com/user-attachments/assets/e7bde48e-606d-47a3-b95b-74c7bd572452)
+в том числе и uvicorn, который может быть использован как сервер для запуска кода.
+```
+python uvicorn main:app  
+```
+(в некоторых случаях python3 uvicorn main:app) Для того, чтобы ьфшт сработал, нужно находиться в папке проекта.
 
+В файле указывается вся необходимая для запуска приложения информация.
+```
+from fastapi import FastAPI
+from app.routers import user as ur
+from app.routers import task as tr
+
+app = FastAPI(swagger_ui_parameters={'tryItOutEnabled': True})
+
+
+@app.get('/')
+async def welcome():
+    return {"message": "Welcome to the materials for solving tasks for the EGE  in computer science"}
+
+app.include_router(tr.router)
+app.include_router(ur.router)
+```
+
+Также в файле schemas.py создаются основные схемы для данных, которые будут храниться в проекте.
+
+
+Далее, в папке routers создаются файлы, которые будут описывать поведение сртаниц и их адреса.
+
+Адрес указывается в декораторе в скобках. Также, декоратор указывает на тип операции: 
+@app.get() - запрос
+@app.post() - создание данных
+@app.put() - изменение данных
+@app.delete() - удаление данных
+
+Пример:
+```
+@router.get("/")
+async def all_tasks(db: Annotated[Session, Depends(get_db)]):
+    tasks = db.scalars(select(Task)).all()
+    return tasks
+```
+Далее создаются модели для будущих баз данных. Благодаря SQLAlchemy создание баз данных происходит проще, чем при создании напрямую через sqlaite3.
+![image](https://github.com/user-attachments/assets/2213cd3d-acf7-4df9-afbb-99d58fb43d12)
+Создается папка backand и в ней создаются файлы, которые будут "следить" за создание нашей будущей базы.
+Далее, cоздаем базу данных и таблицы. Для этого нужно выполнить команду alembic init alembic. Она создаст директорию Alembic с необходимыми файлами конфигурации
+
+Сгенерировать миграцию. Для этого нужно выполнить команду 
+```
+alembic revision --autogenerate -m "Create users table"
+```
+При этом создается папка миграции и создается файл миграции, который хранит информацию о структуре базы данных.
+Для внесения изменений в структуру, необходимо выполнить миграцию (файлы миграции перезапишутся и в конечном файле БД изменится)
+```
+alembic upgrade
+```
+Остальная работа с данными может осуществяться через удобную панель управления сайтом (документация)
 ### Особенности создания приложения в Flask
