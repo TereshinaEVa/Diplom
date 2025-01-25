@@ -82,5 +82,6 @@ class TasksAdmin(admin.ModelAdmin):
 
 ### Особенности создания приложения в FastAPI
 
+![image](https://github.com/user-attachments/assets/e7bde48e-606d-47a3-b95b-74c7bd572452)
 
 ### Особенности создания приложения в Flask
